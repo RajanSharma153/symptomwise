@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+{% block title %}आपके लक्षणों का सार{% endblock %}
+{% block head %}<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>{% endblock %}
+{% block content %}
+<section class="results-hero section-wrap">
+  <a href="{{ url_for('index') }}#symptom-checker" class="back-link">← चुने गए लक्षण बदलें</a>
+  <div class="eyebrow"><span class="pulse-dot"></span> आपकी जानकारी</div>
+  <h1>आपके <span class="gradient-text">लक्षणों की झलक।</span></h1>
+  <p class="hero-lede">यह उन स्वास्थ्य स्थितियों का शैक्षिक सार है जिनमें आपके चुने गए कुछ लक्षण मिल सकते हैं।</p>
+  <div class="selected-summary"><span class="summary-icon">✓</span><div><small>आपके चुने हुए लक्षण</small><div class="selected-tags">{% for s in selected %}<span>{{ symptom_hi.get(s, s) }}</span>{% endfor %}</div></div></div>
+</section>
+<section class="results-layout section-wrap">
+  <div class="results-main">
+    <div class="section-heading compact"><div><div class="eyebrow">लक्षणों की समानता</div><h2>जानने योग्य विषय</h2><p>चुने गए लक्षणों से मेल खाने की संख्या के आधार पर क्रम।</p></div><span class="result-count">{{ matches|length }} विषय</span></div>
+    {% if matches %}
+      {% for m in matches %}
+      <article class="result-card reveal" style="--result-color:{{ m.color }}">
+        <div class="result-thumb"><img src="{{ m.image }}" alt="" loading="lazy"></div>
+        <div class="result-info"><div class="result-kicker">आम स्वास्थ्य विषय</div><h3>{{ condition_hi.get(m.name, {}).get("name", m.name) }}</h3><p>{{ m.description }}</p><div class="match-tags">{% for s in m.matches %}<span>{{ symptom_hi.get(s, s) }}</span>{% endfor %}</div><a href="{{ url_for('condition', name=m.name) }}" class="text-link">सावधानियाँ जानें <span>→</span></a></div>
+        <div class="result-score"><div class="score-ring" style="--score:{{ m.score }}%;--ring-color:{{ m.color }}"><span>{{ m.score }}<small>%</small></span></div><small>लक्षणों का<br>मेल*</small></div>
+      </article>
+      {% endfor %}
+    {% else %}
+      <div class="empty-state"><span>✦</span><h3>कोई मेल नहीं मिला</h3><p>कुछ और लक्षण चुनें या स्वास्थ्य विषय खोजें।</p><a href="{{ url_for('index') }}" class="btn btn-primary">फिर कोशिश करें</a></div>
+    {% endif %}
+  </div>
+  <aside class="results-side">
+    <div class="chart-card reveal"><div class="card-heading"><div><span class="eyebrow">चार्ट में देखें</span><h3>लक्षणों का मेल</h3></div><span class="chart-icon">▥</span></div><p class="muted small">चुने गए लक्षणों और हर विषय की उदाहरण सूची की तुलना।</p><div class="chart-wrap"><canvas id="overlapChart" aria-label="Bar chart of symptom overlap" role="img"></canvas></div><div class="chart-foot"><span class="chart-legend"></span> लक्षणों के मेल का स्कोर</div></div>
+    <div class="care-card reveal"><span class="care-icon">♡</span><h3>आपकी सेहत सबसे ज़रूरी है।</h3><p>इस सार को सवाल तैयार करने के लिए इस्तेमाल करें, निदान के लिए नहीं।</p><a href="{{ url_for('about') }}" class="text-link">इसकी सीमाएँ जानें <span>→</span></a></div>
+  </aside>
+</section>
+<section class="section-wrap result-disclaimer"><span>ⓘ</span><p><strong>ध्यान रखें:</strong> ये प्रतिशत केवल लक्षणों के मेल का स्कोर हैं, बीमारी की संभावना या चिकित्सकीय भरोसे का माप नहीं। कई स्थितियों में एक जैसे लक्षण हो सकते हैं। लक्षण गंभीर हों, तेजी से बढ़ें या चिंता हो तो योग्य स्वास्थ्य विशेषज्ञ से संपर्क करें।</p></section>
+<script id="chartData" type="application/json">{{ chart_data|tojson }}</script>
+{% endblock %}
+{% block scripts %}
+<script>
+(() => {
+ const node = document.getElementById('chartData');
+ const canvas = document.getElementById('overlapChart');
+ if (!node || !canvas || !window.Chart) return;
+ const data = JSON.parse(node.textContent);
+ new Chart(canvas, {
+   type: 'bar',
+   data: { labels: data.map(x => x.label), datasets: [{ data: data.map(x => x.score), backgroundColor: data.map(x => x.color + 'cc'), borderRadius: 9, borderSkipped: false, barThickness: 16 }] },
+   options: { indexAxis: 'y', responsive: true, maintainAspectRatio: false, animation: { duration: 1100, easing: 'easeOutQuart' }, plugins: { legend: { display: false }, tooltip: { callbacks: { label: c => ` ${c.raw}% symptom overlap (not probability)` } } }, scales: { x: { min: 0, max: 100, grid: { color: '#edf0f7' }, ticks: { callback: v => v + '%', color: '#8a91a6', font: { family: 'DM Sans' } }, border: { display: false } }, y: { grid: { display: false }, ticks: { color: '#555e75', font: { family: 'DM Sans', weight: 600 } }, border: { display: false } } } }
+ });
+})();
+</script>
+{% endblock %}

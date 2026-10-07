@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="hi">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f7f8ff">
+  <meta name="description" content="SymptomWise is an educational symptom overlap explorer.">
+  <title>{% block title %}SymptomWise{% endblock %} · Health, made clearer</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+  {% block head %}{% endblock %}
+</head>
+<body>
+  <div class="ambient ambient-one"></div><div class="ambient ambient-two"></div>
+  <header class="site-header">
+    <a class="brand" href="{{ url_for('index') }}" aria-label="SymptomWise home">
+      <span class="brand-mark"><svg viewBox="0 0 32 32" aria-hidden="true"><path d="M16 5v22M5 16h22" stroke="currentColor" stroke-width="4" stroke-linecap="round"/></svg></span>
+      <span>symptom<span class="brand-accent">wise</span><small>आपका स्वास्थ्य साथी</small></span>
+    </a>
+    <button class="nav-toggle" id="navToggle" aria-label="Toggle navigation" aria-expanded="false"><span></span><span></span><span></span></button>
+    <button class="theme-toggle" id="themeToggle" type="button" aria-label="डार्क मोड चालू करें" title="थीम बदलें"><span class="theme-icon">☾</span><span class="theme-label">डार्क मोड</span></button>
+    <nav class="nav-links" id="navLinks">
+      <a href="{{ url_for('index') }}" class="{% if request.endpoint == 'index' %}active{% endif %}">होम</a>
+      <a href="{{ url_for('about') }}" class="{% if request.endpoint == 'about' %}active{% endif %}">यह कैसे काम करता है</a>
+      <a class="nav-cta" href="{{ url_for('index') }}#symptom-checker">लक्षण चुनें <span>↗</span></a>
+    </nav>
+  </header>
+  <main>{% block content %}{% endblock %}</main>
+  <footer class="footer">
+    <div class="footer-brand"><span class="brand-mark mini">✚</span><strong>symptom<span class="brand-accent">wise</span></strong></div>
+    <p>यह बेहतर सवाल पूछने में मदद करता है, चिकित्सा सलाह का विकल्प नहीं है।</p>
+    <div class="footer-bottom"><span>© 2026 सिम्पटमवाइज़ डेमो</span><span><span class="status-dot"></span> केवल शैक्षिक जानकारी</span></div>
+  </footer>
+  <script src="{{ url_for('static', filename='js/app.js') }}"></script>
+  {% block scripts %}{% endblock %}
+</body>
+</html>

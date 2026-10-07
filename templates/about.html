@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+{% block title %}यह कैसे काम करता है{% endblock %}
+{% block content %}
+<section class="about-hero section-wrap"><div class="eyebrow"><span class="pulse-dot"></span> सरल अनुभव, सोच-समझकर बनाया गया</div><h1>स्वास्थ्य की जानकारी,<br><span class="gradient-text">आसान और स्पष्ट।</span></h1><p class="hero-lede">सिम्पटमवाइज़ एक शैक्षिक प्रोजेक्ट है, जो आम स्वास्थ्य जानकारी को आसानी से समझने में मदद करता है।</p></section>
+<section class="how-grid section-wrap">
+  <article class="how-card reveal"><span class="how-number">01</span><span class="how-icon">⌕</span><h2>लक्षण चुनें</h2><p>जिन लक्षणों के बारे में जानना चाहते हैं, उन्हें खोजें और चुनें। आप एक से अधिक लक्षण चुन सकते हैं।</p></article>
+  <article class="how-card reveal"><span class="how-number">02</span><span class="how-icon">▥</span><h2>लक्षणों का मेल देखें</h2><p>ऐप आपके चयन की तुलना हर विषय के आम लक्षणों की एक छोटी उदाहरण सूची से करता है।</p></article>
+  <article class="how-card reveal"><span class="how-number">03</span><span class="how-icon">♡</span><h2>आगे की जानकारी जानें</h2><p>सामान्य सावधानियाँ और चेतावनी संकेत पढ़ें और डॉक्टर से बातचीत में इनका उपयोग करें।</p></article>
+</section>
+<section class="disclaimer-panel section-wrap reveal"><div class="disclaimer-symbol">ⓘ</div><div><span class="eyebrow">कृपया पढ़ें</span><h2>यह चिकित्सकीय निदान नहीं है।</h2><p>लक्षणों का मेल एक साधारण सॉफ़्टवेयर गणना है—यह बीमारी की संभावना, चिकित्सकीय भरोसे का स्कोर या प्रमाणित चिकित्सा मॉडल नहीं है। ऐप उम्र, चिकित्सा इतिहास, लक्षणों की गंभीरता, जाँच या टेस्ट परिणामों का आकलन नहीं करता। इसके आधार पर इलाज शुरू/बंद/बदलें नहीं और चिकित्सा सहायता लेने में देरी न करें।</p><p>गंभीर, अचानक शुरू हुए या तेजी से बिगड़ते लक्षणों पर तुरंत चिकित्सा सहायता लें। संदेह होने पर योग्य स्वास्थ्य विशेषज्ञ से संपर्क करें।</p></div></section>
+<section class="section-wrap about-bottom"><h2>जानना शुरू करें</h2><p>आज जो लक्षण महसूस हो रहे हैं, उनसे शुरुआत करें।</p><a class="btn btn-primary" href="{{ url_for('index') }}#symptom-checker">लक्षण देखें <span>→</span></a></section>
+{% endblock %}

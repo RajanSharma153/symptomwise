@@ -1,0 +1,59 @@
+{% extends "base.html" %}
+{% block title %}लक्षण देखें{% endblock %}
+{% block content %}
+<section class="hero section-wrap">
+  <div class="hero-copy reveal">
+    <div class="eyebrow"><span class="pulse-dot"></span> समझदारी की ओर पहला कदम</div>
+    <h1>अपने शरीर के <span class="gradient-text">संकेत समझें।</span></h1>
+    <p class="hero-lede">आम लक्षणों के बारे में जानें, समझें कि वे किन स्वास्थ्य स्थितियों से मिलते-जुलते हो सकते हैं, और डॉक्टर से पूछने के लिए उपयोगी सवाल तैयार करें।</p>
+    <div class="hero-actions"><a class="btn btn-primary" href="#symptom-checker">लक्षण देखें <span>↓</span></a><a class="text-link" href="{{ url_for('about') }}">यह कैसे काम करता है <span>↗</span></a></div>
+    <div class="trust-row"><div class="avatar-stack"><span>✚</span><span>♡</span><span>＋</span></div><span><strong>{{ condition_count }} विषय</strong> · सरल और उपयोगी जानकारी</span></div>
+  </div>
+  <div class="hero-art reveal delay-2">
+    <div class="orbit orbit-a"></div><div class="orbit orbit-b"></div>
+    <div class="hero-glass">
+      <div class="glass-top"><span class="tiny-label">स्वास्थ्य की झलक</span><span class="live-pill"><i></i> तैयार</span></div>
+      <div class="heart-orb"><svg viewBox="0 0 100 100"><path d="M50 83S13 60 13 34c0-18 23-25 37-5 14-20 37-13 37 5 0 26-37 49-37 49Z" fill="none" stroke="currentColor" stroke-width="3"/><path d="M22 50h17l8-15 9 30 8-15h14" fill="none" stroke="#f38aa7" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+      <div class="floating-note note-top"><span class="note-icon purple">✦</span><div><strong>लक्षणों से शुरुआत करें</strong><small>एक-एक कदम आगे</small></div></div>
+      <div class="floating-note note-bottom"><span class="note-icon mint">✓</span><div><strong>आगे के उपयोगी कदम</strong><small>मदद कब लें, जानें</small></div></div>
+      <div class="glass-footer"><span>स्वास्थ्य जागरूकता</span><div class="mini-bars"><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div></div>
+    </div>
+  </div>
+  <div class="hero-spark spark-one">✳</div><div class="hero-spark spark-two">✦</div>
+</section>
+<section class="stats-strip section-wrap reveal">
+  <div class="stat-item"><span class="stat-icon lavender">⌕</span><div><strong>आसानी से खोजें</strong><small>आम लक्षण खोजें</small></div></div>
+  <div class="stat-item"><span class="stat-icon mint">▤</span><div><strong>आसान भाषा में जानकारी</strong><small>सरल शब्दों में सारांश</small></div></div>
+  <div class="stat-item"><span class="stat-icon peach">♡</span><div><strong>स्वास्थ्य पहले</strong><small>जानें कब मदद लें</small></div></div>
+</section>
+<section class="checker-section section-wrap" id="symptom-checker">
+  <div class="section-heading reveal"><div><div class="eyebrow">चलिए शुरू करें</div><h2>आपको <span class="gradient-text">क्या परेशानी है?</span></h2><p>जो भी लक्षण महसूस हो रहे हैं, उन्हें चुनें। आप कभी भी चयन बदल सकते हैं।</p></div><div class="step-badge"><span>01</span> / 02</div></div>
+  {% if error %}<div class="alert">{{ error }}</div>{% endif %}
+  <form method="POST" action="{{ url_for('results') }}" id="symptomForm">
+    <div class="symptom-panel reveal">
+      <div class="symptom-toolbar"><div class="search-box"><span>⌕</span><input id="symptomSearch" type="search" placeholder="लक्षण खोजें..." autocomplete="off" aria-label="लक्षण खोजें"></div><div class="चुने गए-counter"><span id="चुने गएCount">0</span> चुने गए</div></div>
+      <div class="symptom-chips" id="symptomChips">
+        {% set icons = {"runny nose":"◌","sneezing":"✧","sore throat":"◉","cough":"〰","congestion":"≋","fever":"♨","body aches":"⌁","chills":"❄","fatigue":"☾","headache":"✳","wheezing":"〰","shortness of breath":"↗","chest tightness":"◇","increased thirst":"♧","frequent urination":"↗","blurred vision":"◉","slow healing":"＋","dizziness":"◌","chest pain":"♡","diarrhea":"≋","vomiting":"↗","nausea":"◌","stomach cramps":"⌁","weakness":"⌁","pale skin":"○","heartburn":"♨","acid reflux":"↗","sour taste":"◉","light sensitivity":"☼","sound sensitivity":"♫","visual changes":"✧"} %}
+        {% for symptom in symptoms %}
+        <label class="symptom-chip" data-symptom="{{ symptom|lower }}"><input type="checkbox" name="symptoms" value="{{ symptom }}"><span class="chip-check">✓</span><span class="chip-icon">{{ icons.get(symptom, '✦') }}</span><span>{{ symptom_hi.get(symptom, symptom) }}</span></label>
+        {% endfor %}
+      </div>
+      <div class="panel-bottom"><span class="privacy-note"><span>◈</span> जानकारी देखने के लिए अकाउंट ज़रूरी नहीं</span><button class="btn btn-primary btn-submit" type="submit">लक्षणों का सार देखें <span>→</span></button></div>
+    </div>
+  </form>
+  <p class="medical-note"><span>ⓘ</span> यह टूल केवल लक्षणों की समानता दिखाता है। यह बीमारी का निदान या आपका व्यक्तिगत जोखिम नहीं बता सकता।</p>
+</section>
+<section class="विषय-section section-wrap">
+  <div class="section-heading reveal"><div><div class="eyebrow">अपनी गति से जानें</div><h2>Explore common <span class="gradient-text">health विषय.</span></h2><p>डॉक्टर से अगली बातचीत के लिए सरल और उपयोगी जानकारी।</p></div></div>
+  <div class="topic-grid">
+    {% set विषय = [("Common Cold","साँस संबंधी","https://images.unsplash.com/photo-1584515933487-779824d29309?auto=format&fit=crop&w=700&q=80","#edf0ff"),("Asthma","साँस","https://images.unsplash.com/photo-1505751172876-fa1923c5c528?auto=format&fit=crop&w=700&q=80","#e8faf6"),("Migraine","न्यूरोलॉजी","https://images.unsplash.com/photo-1506126613408-eca07ce68773?auto=format&fit=crop&w=700&q=80","#f2edff"),("GERD","पाचन स्वास्थ्य","https://images.unsplash.com/photo-1490645935967-10de6ba17061?auto=format&fit=crop&w=700&q=80","#fff4e7")] %}
+    {% for name, category, image, bg in विषय %}
+    <a href="{{ url_for('condition', name=name) }}" class="topic-card reveal" style="--topic-bg:{{ bg }}">
+      <div class="topic-image"><img src="{{ image }}" alt="" loading="lazy"><span class="topic-arrow">↗</span></div>
+      <div class="topic-content"><span class="topic-category">{{ category }}</span><h3>{{ condition_hi.get(name, {}).get("name", name) }}</h3><span class="topic-link">जानकारी पढ़ें <span>→</span></span></div>
+    </a>
+    {% endfor %}
+  </div>
+</section>
+<section class="bottom-cta section-wrap reveal"><div class="cta-decoration">✳</div><div><span class="eyebrow">छोटे कदम भी अहम हैं</span><h2>जानने की इच्छा <br>अच्छी शुरुआत है।</h2><p>अपने लक्षणों की जानकारी डॉक्टर से बातचीत में मदद के लिए इस्तेमाल करें।</p></div><a href="#symptom-checker" class="btn btn-light">खोज शुरू करें <span>↑</span></a></section>
+{% endblock %}
