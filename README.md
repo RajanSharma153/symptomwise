@@ -1,4 +1,4 @@
-# SymptomWise 
+<img width="1887" height="865" alt="Screenshot 2026-10-07 122700" src="https://github.com/user-attachments/assets/7555b158-3fe3-4fb1-a030-23f80d770bcb" /># SymptomWise 
 
 ## चलाने का तरीका
 
@@ -19,3 +19,5 @@ A disease prediction web application built with Flask and Python is an interacti
 
 ## ज़रूरी मेडिकल सूचना
 यह केवल शैक्षिक डेमो है, चिकित्सा निदान का विकल्प नहीं। स्कोर लक्षणों की सूची से साधारण मिलान है; यह बीमारी की संभावना नहीं बताता और प्रमाणित चिकित्सा मॉडल नहीं है। इसके आधार पर इलाज शुरू, बंद या न बदलें। गंभीर या तेजी से बिगड़ते लक्षणों पर तुरंत योग्य स्वास्थ्य विशेषज्ञ से संपर्क करें।
+
+
